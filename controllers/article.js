@@ -177,9 +177,10 @@ console.log(newcom.body);
     });
 
 // route pour l'appli frontend ==> ANGULAR APP :) 
-router.get('*', function(req, res)
+router.get('/', function(req, res)
 {
   res.sendfile('./public/index.html'); // on charge une seule vue ! angular s'occupe d'afficher les changements
-});
+}); 
 
 module.exports = router;
+//lol
