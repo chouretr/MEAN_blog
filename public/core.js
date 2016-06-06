@@ -18,6 +18,13 @@ moduleArticle.config(function($routeProvider) {
             templateUrl : 'pages/administration.html',
             controller  : 'administrationController'
         })
+
+        // route for the admin page
+        .when('/article', 
+        {
+            templateUrl : 'pages/article.html',
+            controller  : 'articleController'
+        })
 });
 
 /* on créer un controlleur et 3 fonctions
@@ -75,6 +82,11 @@ moduleArticle.controller('mainController', function ($scope, $http)
 moduleArticle.controller('administrationController', function($scope) 
 {
     $scope.message = 'Page d\'administration.';
+});
+
+moduleArticle.controller('articleController', function($scope) 
+{
+    $scope.message = 'Page d un article.';
 });
 
 // fonctionnement : les fonctions interrogent l'api, 
