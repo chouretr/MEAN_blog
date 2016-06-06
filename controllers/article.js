@@ -3,6 +3,9 @@ var express = require('express');
 var router = express.Router();
 
 var Article = mongoose.model('Article');
+var Comment = mongoose.model('Comment');
+var newcom = new Comment({ body: 'nouveua commentaire', });
+console.log(newcom.body);
 
 // routes ======================================================================
 
@@ -80,11 +83,30 @@ var Article = mongoose.model('Article');
         });
     });
 
+    // route pour créer un commentaire
+    router.post('/blog/articles/:article_id/comments', function(req, res) 
+    {
+        // On utilise mongoose pour recup tous les commentaires dans la DB
+        var comment = new Comment(req.body);
+        comment.post = req.article_id;
+        comment.save(function(err, comment)
+        {
+            if(err)
+            {
+                return next(err);
+            }
+
+        });
+        res.json(comment); // retourne tous les articles au format JSON
+    });
+
+    //
+
 
 // route pour l'appli frontend ==> ANGULAR APP :) 
 router.get('*', function(req, res)
 {
   res.sendfile('./public/index.html'); // on charge une seule vue ! angular s'occupe d'afficher les changements
-})
+});
 
 module.exports = router;
