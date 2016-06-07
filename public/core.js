@@ -5,7 +5,7 @@ var routeApp = angular.module('routeApp', [
     'routeAppControllers'
 ]);
 
-// gere les routes angulard
+// gere les routes angular
 routeApp.config(['$routeProvider',
     function($routeProvider) {
 
@@ -27,8 +27,7 @@ routeApp.config(['$routeProvider',
             controller: 'articleCtrl'
         })
         .otherwise({
-            redirectTo: 'pages/homle.html',
-            controller: 'homeCtrl'
+            redirectTo: '/'
         });
     }
 ]);
@@ -52,7 +51,7 @@ routeAppControllers.controller('articleCtrl', ['$scope', '$http', '$routeParams'
         $scope.formData = {};
         var id = $routeParams.id;
 
-        // quand on arrive sur la page :on affiche tous les articles
+        // on recupere un seule article via l'id
             $http.get('/blog/articles/' + id)
                 .success(function (data) {
                     $scope.articles = data;
@@ -71,7 +70,7 @@ routeAppControllers.controller('homeCtrl', ['$scope', '$http',
         $scope.formData = {};
 
 
-        // quand on arrive sur la page :on affiche tous les articles
+        // quand on arrive sur la page on affiche tous les articles
         $http.get('/blog/articles')
             .success(function (data) {
                 $scope.articles = data;
@@ -107,66 +106,6 @@ routeAppControllers.controller('homeCtrl', ['$scope', '$http',
         };
     }
 ]);
-
-
-/*moduleArticle.controller('mainController', function ($scope, $http)
-{
-
-    $scope.formData = {};
-
-
-    // quand on arrive sur la page :on affiche tous les articles
-    $http.get('/blog/articles')
-        .success(function(data)
-        {
-            $scope.articles = data;
-            console.log(data);
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });
-
-    // quand on soumet un formulaire, on envoi le text à l'API
-    $scope.createArticle = function()
-    {
-        $http.post('/blog/articles', $scope.formData)
-            .success(function(data)
-            {
-                //$scope.formData = {}; // clear the form so our user is ready to enter another
-                $scope.articles = data;
-                console.log(data);
-            })
-            .error(function(data)
-            {
-                console.log('Error: ' + data);
-            });
-    };
-
-    // supprime un article après vérification
-    $scope.deleteArticle = function(id)
-    {
-        $http.delete('/blog/articles/' + id)
-            .success(function(data)
-            {
-                $scope.articles = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
-});
-
-moduleArticle.controller('administrationController', function($scope)
-{
-    console.log('salut');
-    $scope.message = "Page d\'administration.";
-});
-
-moduleArticle.controller('articleController', function($scope)
-{
-    $scope.message = 'Page d un article.';
-});*/
 
 // fonctionnement : les fonctions interrogent l'api,
 //au chargement de la page GET /blog/articles, on lie le résultat en JSON avec le $scope.articles.
