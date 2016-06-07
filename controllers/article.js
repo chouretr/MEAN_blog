@@ -25,6 +25,19 @@ console.log(newcom.body);
         });
     });
 
+    // route pour récup un article en particulier
+    router.get('/blog/articles/:article_id', function(req, res)
+    {
+        Article.find({'_id': req.params.article_id}, function(err, article) 
+        {
+            if (err)
+            {
+                res.send(err);
+            }
+            res.json(article); 
+        });
+    });
+
     // créé un article et renvois tous les articles 
     router.post('/blog/articles', function(req, res) 
     {
@@ -114,7 +127,7 @@ console.log(newcom.body);
             }
 
         });
-        res.json(comment); // retourne tous les articles au format JSON
+        res.json(comment);
     });
 
     // route pour récup tous les commentaires d'un article
@@ -126,7 +139,7 @@ console.log(newcom.body);
             {
                 res.send(err);
             }
-            res.json(comments); // retourne tous les articles au format JSON
+            res.json(comments); 
         });
     });
 
