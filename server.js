@@ -41,4 +41,3 @@ mongoose.connect('mongodb://admin:password@ds011291.mlab.com:11291/mean_blog', f
   console.log('listening on port' + port)
   });
 });
-

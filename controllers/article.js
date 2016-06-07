@@ -28,13 +28,14 @@ console.log(newcom.body);
     // route pour récup un article en particulier
     router.get('/blog/articles/:article_id', function(req, res)
     {
+        //console.log('salut');
         Article.find({'_id': req.params.article_id}, function(err, article) 
         {
             if (err)
             {
                 res.send(err);
             }
-            res.json(article); 
+            res.json(article);
         });
     });
 

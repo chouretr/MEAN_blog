@@ -6,12 +6,15 @@
             <div class="col-lg-8">
 
                 <!-- Title -->
-                <h1>Blog Post Title</h1>
+                <div class="checkbox" ng-repeat="article in articles">
+                    <h1>{{ article.title }}</h1>
+                </div>
+
 
                 <!-- Author -->
                 <p class="lead">
                     by <a href="#">Start Bootstrap</a>
-                </p>
+                </p>²
 
                 <hr>
 
@@ -92,4 +95,5 @@
 
 
             </div>
-</div>
+        </div>
+    </div>
