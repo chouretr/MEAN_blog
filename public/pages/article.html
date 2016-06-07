@@ -45,9 +45,9 @@
                     <h4>Leave a Comment:</h4>
                     <form role="form">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" ng-model="formData.content"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-lg" ng-click="createComment()">Ajouter un commentaire</button>
                     </form>
                 </div>
 

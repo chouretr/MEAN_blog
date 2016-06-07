@@ -44,12 +44,12 @@ var Comment = mongoose.model('Comment');
     {
         // créer un article, on récupere les infos en AJAX depuis Angular
         Article.create(
-        {
-            title : req.body.title,
-            author : req.body.author,
-            content : req.body.content,
-            done : false
-        }, function(err, todo)
+            {
+                title : req.body.title,
+                author : req.body.author,
+                content : req.body.content,
+                done : false
+            }, function(err, todo)
         {
             if (err)
             {
@@ -98,21 +98,21 @@ var Comment = mongoose.model('Comment');
         {
             _id : req.params.article_id
         }, function(err, article)
-        {
-            if(err)
-            {
-                res.send(err);
-            }
-
-            // récupere et retourne tous les articles après en avoir supprimer un
-            Article.find(function(err, articles)
             {
                 if(err)
                 {
-                    res.send(err)
+                    res.send(err);
                 }
-                res.json(articles);
-            });
+
+                // récupere et retourne tous les articles après en avoir supprimer un
+                Article.find(function(err, articles)
+                {
+                    if(err)
+                    {
+                        res.send(err)
+                    }
+                    res.json(articles);
+                });
         });
     });
 
@@ -126,20 +126,22 @@ var Comment = mongoose.model('Comment');
                 author : req.body.author,
                 post : req.params.article_id,
                 done : false
-            }
-        ), function(err, comment)
-    {
-        if (err)
+            }, function(err, comment)
         {
-            res.send(err);
-        }
+            if (err)
+            {
+                res.send(err);
+            }
+            Comment.find({'post': req.params.article_id}, function(err, comments)
+            {
+                if (err)
+                {
+                    res.send(err);
+                }
+                res.json(comments);
+            });
 
-    };
-        /*var comment = new Comment(req.body);
-        comment.post = req.params.article_id;
-        comment.body = req.body.content;*/
-
-        //res.json(comment);
+        });
     });
 
     // route pour récup tous les commentaires d'un article

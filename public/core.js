@@ -70,6 +70,18 @@ routeAppControllers.controller('articleCtrl', ['$scope', '$http', '$routeParams'
                     console.log('Error: ' + data);
                 });
 
+        $scope.createComment = function () {
+            $http.post('/blog/articles/' + id + '/comments', $scope.formData)
+                .success(function (data) {
+                    //$scope.formData = {}; // clear the form so our user is ready to enter another
+                    $scope.comments = data;
+                    console.log(data);
+                })
+                .error(function (data) {
+                    console.log('Error: ' + data);
+                });
+        };
+
     }
 ]);
 
