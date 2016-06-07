@@ -4,17 +4,17 @@ var router = express.Router();
 
 var Article = mongoose.model('Article');
 var Comment = mongoose.model('Comment');
-var newcom = new Comment({ body: 'nouveua commentaire', });
-console.log(newcom.body);
+//var newcom = new Comment({ body: 'nouveua commentaire', });
+//console.log(newcom.body);
 
 // routes ======================================================================
 
     // api ---------------------------------------------------------------------
     // recupere tous les articles
-    router.get('/blog/articles', function(req, res) 
+    router.get('/blog/articles', function(req, res)
     {
         // On utilise mongoose pour recup tous les articles dans la DB
-        Article.find(function(err, articles) 
+        Article.find(function(err, articles)
         {
             if (err)
             {
@@ -29,7 +29,7 @@ console.log(newcom.body);
     router.get('/blog/articles/:article_id', function(req, res)
     {
         //console.log('salut');
-        Article.find({'_id': req.params.article_id}, function(err, article) 
+        Article.find({'_id': req.params.article_id}, function(err, article)
         {
             if (err)
             {
@@ -39,8 +39,8 @@ console.log(newcom.body);
         });
     });
 
-    // créé un article et renvois tous les articles 
-    router.post('/blog/articles', function(req, res) 
+    // créé un article et renvois tous les articles
+    router.post('/blog/articles', function(req, res)
     {
         // créer un article, on récupere les infos en AJAX depuis Angular
         Article.create(
@@ -49,7 +49,7 @@ console.log(newcom.body);
             author : req.body.author,
             content : req.body.content,
             done : false
-        }, function(err, todo) 
+        }, function(err, todo)
         {
             if (err)
             {
@@ -57,7 +57,7 @@ console.log(newcom.body);
             }
 
             // récupere et retourne tous les articles après en avoir créer un
-            Article.find(function(err, articles) 
+            Article.find(function(err, articles)
             {
                 if(err)
                 {
@@ -92,12 +92,12 @@ console.log(newcom.body);
     });
 
     // supprime una article
-    router.delete('/blog/articles/:article_id', function(req, res) 
+    router.delete('/blog/articles/:article_id', function(req, res)
     {
         Article.remove(
         {
             _id : req.params.article_id
-        }, function(err, article) 
+        }, function(err, article)
         {
             if(err)
             {
@@ -105,7 +105,7 @@ console.log(newcom.body);
             }
 
             // récupere et retourne tous les articles après en avoir supprimer un
-            Article.find(function(err, articles) 
+            Article.find(function(err, articles)
             {
                 if(err)
                 {
@@ -117,42 +117,51 @@ console.log(newcom.body);
     });
 
     // route pour créer un commentaire
-    router.post('/blog/articles/:article_id/comments', function(req, res) 
+    router.post('/blog/articles/:article_id/comments', function(req, res)
     {
         // On utilise mongoose pour recup tous les commentaires dans la DB
-        var comment = new Comment(req.body);
-        comment.post = req.params.article_id;
-        comment.save(function(err, comment)
-        {
-            if(err)
+        Comment.create(
             {
-                return next(err);
+                content : req.body.content,
+                author : req.body.author,
+                post : req.params.article_id,
+                done : false
             }
+        ), function(err, comment)
+    {
+        if (err)
+        {
+            res.send(err);
+        }
 
-        });
-        res.json(comment);
+    };
+        /*var comment = new Comment(req.body);
+        comment.post = req.params.article_id;
+        comment.body = req.body.content;*/
+
+        //res.json(comment);
     });
 
     // route pour récup tous les commentaires d'un article
     router.get('/blog/articles/:article_id/comments', function(req, res)
     {
-        Comment.find({'post': req.params.article_id}, function(err, comments) 
+        Comment.find({'post': req.params.article_id}, function(err, comments)
         {
             if (err)
             {
                 res.send(err);
             }
-            res.json(comments); 
+            res.json(comments);
         });
     });
 
     // supprime un article
-    router.delete('/blog/articles/:article_id/comments/:comment_id', function(req, res) 
+    router.delete('/blog/articles/:article_id/comments/:comment_id', function(req, res)
     {
         Comment.remove(
         {
             _id : req.params.comment_id
-        }, function(err, comment) 
+        }, function(err, comment)
         {
             if(err)
             {
@@ -160,7 +169,7 @@ console.log(newcom.body);
             }
 
             // récupere et retourne tous les articles après en avoir supprimer un
-            Comment.find({'post': req.params.article_id}, function(err, comments) 
+            Comment.find({'post': req.params.article_id}, function(err, comments)
             {
                 if(err)
                 {
@@ -196,7 +205,7 @@ console.log(newcom.body);
 router.get('/', function(req, res)
 {
   res.sendfile('./public/index.html'); // on charge une seule vue ! angular s'occupe d'afficher les changements
-}); 
+});
 
 module.exports = router;
 //lol

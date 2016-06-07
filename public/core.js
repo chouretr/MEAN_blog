@@ -60,6 +60,15 @@ routeAppControllers.controller('articleCtrl', ['$scope', '$http', '$routeParams'
                 .error(function (data) {
                     console.log('Error: ' + data);
                 });
+            $http.get('/blog/articles/' + id + '/comments')
+                .success(function (data) {
+                    $scope.comments = data;
+                    console.log(data);
+
+                })
+                .error(function (data) {
+                    console.log('Error: ' + data);
+                });
 
     }
 ]);
