@@ -46,6 +46,8 @@ console.log(newcom.body);
         Article.create(
         {
             title : req.body.title,
+            author : req.body.author,
+            content : req.body.content,
             done : false
         }, function(err, todo) 
         {

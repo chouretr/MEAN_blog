@@ -10,6 +10,10 @@ routeApp.config(['$routeProvider',
     function($routeProvider) {
 
     $routeProvider
+        .when('/', {
+            templateUrl: 'pages/home.html',
+            controller: 'homeCtrl'
+        })
         .when('/home', {
             templateUrl: 'pages/home.html',
             controller: 'homeCtrl'
@@ -23,7 +27,8 @@ routeApp.config(['$routeProvider',
             controller: 'articleCtrl'
         })
         .otherwise({
-            redirectTo: 'pages/home.html'
+            redirectTo: 'pages/homle.html',
+            controller: 'homeCtrl'
         });
     }
 ]);
