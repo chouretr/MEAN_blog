@@ -9,7 +9,6 @@ var UserSchema = new mongoose.Schema({
 });
 
 // Creer un mot de passe crypté
-
 UserSchema.methods.setPassword = function(password){
     this.salt = crypto.randomBytes(16).toString('hex');
 
