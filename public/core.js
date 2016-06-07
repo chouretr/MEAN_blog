@@ -5,7 +5,7 @@ var routeApp = angular.module('routeApp', [
     'routeAppControllers'
 ]);
 
-// gere les routes angular
+// gere les routes angulard
 routeApp.config(['$routeProvider',
     function($routeProvider) {
 
