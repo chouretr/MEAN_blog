@@ -19,4 +19,4 @@ Pour utiliser nodemon (en developpement, permet de ne pas relancer le server à 
     "dev": "nodemon server.js"
     	}
 3 - taper npm run dev
-4 - au lieu de lancer via la commande "node server.js", taper "nodemon server.hs"
+4 - au lieu de lancer via la commande "node server.js", taper "nodemon server.js"

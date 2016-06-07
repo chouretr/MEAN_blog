@@ -3,6 +3,9 @@ var express = require('express');
 var router = express.Router();
 
 var Article = mongoose.model('Article');
+var Comment = mongoose.model('Comment');
+var newcom = new Comment({ body: 'nouveua commentaire', });
+console.log(newcom.body);
 
 // routes ======================================================================
 
@@ -50,10 +53,27 @@ var Article = mongoose.model('Article');
 
     });
 
-//    app.put('/blog/articles/:article_id', function(req, res)
-  //  {
-   //   Article.
-    //})
+    // Route pour modifier un article
+    router.put('/blog/articles/:article_id', function(req, res)
+    {
+        Article.findById(req.params.article_id, function(err, article)
+        {
+            if(err)
+            {
+                res.send(err)
+            }
+            article.title = req.body.title;
+            article.body = req.body.body;
+            article.save(function(err)
+            {
+                if(err)
+                {
+                    res.send(err)
+                }
+                res.json(article);
+            });
+        });
+    });
 
     // supprime una article
     router.delete('/blog/articles/:article_id', function(req, res) 
@@ -80,11 +100,87 @@ var Article = mongoose.model('Article');
         });
     });
 
+    // route pour créer un commentaire
+    router.post('/blog/articles/:article_id/comments', function(req, res) 
+    {
+        // On utilise mongoose pour recup tous les commentaires dans la DB
+        var comment = new Comment(req.body);
+        comment.post = req.params.article_id;
+        comment.save(function(err, comment)
+        {
+            if(err)
+            {
+                return next(err);
+            }
+
+        });
+        res.json(comment); // retourne tous les articles au format JSON
+    });
+
+    // route pour récup tous les commentaires d'un article
+    router.get('/blog/articles/:article_id/comments', function(req, res)
+    {
+        Comment.find({'post': req.params.article_id}, function(err, comments) 
+        {
+            if (err)
+            {
+                res.send(err);
+            }
+            res.json(comments); // retourne tous les articles au format JSON
+        });
+    });
+
+    // supprime un article
+    router.delete('/blog/articles/:article_id/comments/:comment_id', function(req, res) 
+    {
+        Comment.remove(
+        {
+            _id : req.params.comment_id
+        }, function(err, comment) 
+        {
+            if(err)
+            {
+                res.send(err);
+            }
+
+            // récupere et retourne tous les articles après en avoir supprimer un
+            Comment.find({'post': req.params.article_id}, function(err, comments) 
+            {
+                if(err)
+                {
+                    res.send(err)
+                }
+                res.json(comments);
+            });
+        });
+    });
+
+    // Route pour modifier un commentaire
+    router.put('/blog/articles/:article_id/comments/:comment_id', function(req, res)
+    {
+        Comment.findById(req.params.comment_id, function(err, comment)
+        {
+            if(err)
+            {
+                res.send(err)
+            }
+            comment.body = req.body.body;
+            comment.save(function(err)
+            {
+                if(err)
+                {
+                    res.send(err)
+                }
+                res.json(comment);
+            });
+        });
+    });
 
 // route pour l'appli frontend ==> ANGULAR APP :) 
-router.get('*', function(req, res)
+router.get('/', function(req, res)
 {
   res.sendfile('./public/index.html'); // on charge une seule vue ! angular s'occupe d'afficher les changements
-})
+}); 
 
 module.exports = router;
+//lol

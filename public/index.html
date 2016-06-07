@@ -7,10 +7,15 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Blog MEAN by ETNA</title>
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css">    
+    <link rel="stylesheet" href="./css/blog-posts.css">
+
+
 
     <!-- Bootstrap -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,47 +23,36 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+<!-- load angular -->
     <script src="core.js"></script>
   </head>
 
   <body ng-controller="mainController">
-    <h1>BLOG ETNA</h1>
+
+        <!-- HEADER AND NAVBAR -->
+    <header>
+        <nav class="navbar navbar-default">
         <div class="container">
-
-        <div class="jumbotron text-center">
-            <h1>Nombre d'articles :<span class="label label-info">{{ articles.length }}</span></h1>
-        </div>
-
-        <!-- articles -->
-        <div id="article-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-
-                <!-- on boucle sur les articles -->
-                <div class="checkbox" ng-repeat="article in articles">
-                    <label>
-                        <input type="checkbox" ng-click="deleteArticle(article._id)"> {{ article.title }}
-                    </label>
-                </div>
-
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">MEAN Blog by ETNA</a>
             </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#administration"><i class="fa fa-shield"></i> Administration </a></li>
+                <li><a href="#article"><i class="fa fa-shield"></i> Article </a></li>
+
+            </ul>
         </div>
+        </nav>
+    </header>
 
-        <!-- Formulaire de création d'article -->
-        <div id="article-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
-
-                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="titre de l'article" ng-model="formData.title">
-                    </div>
-
-                    <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createArticle()">Ajouter un article</button>
-                </form>
-            </div>
-        </div>
+    <div id="main">
+            <!-- on injectera le contenu ici ! -->
+            <div ng-view></div>
+                    {{ message }}
 
     </div>
 
