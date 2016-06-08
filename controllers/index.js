@@ -1,10 +1,8 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var jwt = require('express-jwt');
 var router = express.Router();
 var User = mongoose.model('User');
-var auth = jwt({secret: 'SECRET', userproperty: 'payload'});
 
 // Creer un utilisateur
 router.post('/register', function(req, res, next) {

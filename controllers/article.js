@@ -2,6 +2,9 @@ var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
+var jwt = ('express-jwt');
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+
 var Article = mongoose.model('Article');
 var Comment = mongoose.model('Comment');
 //var newcom = new Comment({ body: 'nouveua commentaire', });
@@ -40,7 +43,7 @@ var Comment = mongoose.model('Comment');
     });
 
     // créé un article et renvois tous les articles
-    router.post('/blog/articles', function(req, res)
+    router.post('/blog/articles', auth, function(req, res)
     {
         // créer un article, on récupere les infos en AJAX depuis Angular
         Article.create(
@@ -70,7 +73,7 @@ var Comment = mongoose.model('Comment');
     });
 
     // Route pour modifier un article
-    router.put('/blog/articles/:article_id', function(req, res)
+    router.put('/blog/articles/:article_id', auth, function(req, res)
     {
         Article.findById(req.params.article_id, function(err, article)
         {
@@ -92,7 +95,7 @@ var Comment = mongoose.model('Comment');
     });
 
     // supprime una article
-    router.delete('/blog/articles/:article_id', function(req, res)
+    router.delete('/blog/articles/:article_id', auth, function(req, res)
     {
         Article.remove(
         {
@@ -117,7 +120,7 @@ var Comment = mongoose.model('Comment');
     });
 
     // route pour créer un commentaire
-    router.post('/blog/articles/:article_id/comments', function(req, res)
+    router.post('/blog/articles/:article_id/comments', auth, function(req, res)
     {
         // On utilise mongoose pour recup tous les commentaires dans la DB
         Comment.create(
@@ -158,7 +161,7 @@ var Comment = mongoose.model('Comment');
     });
 
     // supprime un article
-    router.delete('/blog/articles/:article_id/comments/:comment_id', function(req, res)
+    router.delete('/blog/articles/:article_id/comments/:comment_id', auth, function(req, res)
     {
         Comment.remove(
         {
@@ -183,7 +186,7 @@ var Comment = mongoose.model('Comment');
     });
 
     // Route pour modifier un commentaire
-    router.put('/blog/articles/:article_id/comments/:comment_id', function(req, res)
+    router.put('/blog/articles/:article_id/comments/:comment_id', auth, function(req, res)
     {
         Comment.findById(req.params.comment_id, function(err, comment)
         {
